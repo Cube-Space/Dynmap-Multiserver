@@ -6,7 +6,7 @@
 
     <groupId>net.cubespace.dynmap</groupId>
     <artifactId>Dynmap-MultiServer</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
