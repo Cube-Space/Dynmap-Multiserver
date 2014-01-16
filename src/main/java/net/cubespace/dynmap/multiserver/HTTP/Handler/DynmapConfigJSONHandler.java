@@ -44,6 +44,10 @@ public class DynmapConfigJSONHandler implements IHandler {
     private static long start = 0;
 
     private class DynmapConfigJSONUpdater extends Thread {
+        public DynmapConfigJSONUpdater() {
+            setName("DynmapConfigJSONUpdater");
+        }
+
         public void run() {
             while(true) {
                 try {

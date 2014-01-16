@@ -49,6 +49,7 @@ public class DynmapServer {
 
         public DynmapServerUpdater(Integer updateInterval) {
             this.updateInterval = updateInterval;
+            setName("DynmaServerUpdater-" + dynmapConfig.getTitle());
         }
 
         public void run() {
