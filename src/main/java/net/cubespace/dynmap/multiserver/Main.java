@@ -27,7 +27,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Init the Logger
-        logger.info("Booting up Dynmap-MultiServer v0.2.0");
+        logger.info("Booting up Dynmap-MultiServer v0.2.1");
         logger.info("Running on Java Version: " + System.getProperty("java.version") + " " + System.getProperty("os.arch"));
         logger.info("Running on OS: " + System.getProperty("os.name"));
 
