@@ -37,7 +37,7 @@ public class MapConfigHandler implements IHandler {
                     DynmapWorldConfig dynmapWorldConfig = dynmapServer.getWorldConfig(dynmapWorld.getName());
                     dynmapWorldConfig.setConfighash(0);
 
-
+                    dynmapWorldConfig.setPlayers(Main.getPlayers());
 
                     String responseStr = gson.toJson(dynmapWorldConfig);
 
