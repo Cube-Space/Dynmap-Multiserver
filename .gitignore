@@ -3,6 +3,6 @@ Dynmap-MultiServer.iml
 web.zip
 web/
 build/
-./config/
+config/main.yml
 logs/
 target/

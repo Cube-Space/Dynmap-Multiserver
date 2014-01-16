@@ -1,7 +1,0 @@
-Webserver:
-  Port: 8080
-  webDir: web/
-DynMap:
-- !!net.cubespace.dynmap.multiserver.Config.Dynmap
-  Folder: F:\Projekte\MC_Dev\Server\plugins\dynmap\web
-  UpdateInterval: 1
