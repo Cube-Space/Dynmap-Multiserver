@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ArrayList;
 
+import static net.cubespace.dynmap.multiserver.Lib.Util.Concat.concat;
+
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
@@ -21,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Init the Logger
-        logger.info("Booting up Dynmap-MultiServer v0.1.0");
+        logger.info("Booting up Dynmap-MultiServer v0.1.1");
         logger.info("Running on Java Version: " + System.getProperty("java.version") + " " + System.getProperty("os.arch"));
         logger.info("Running on OS: " + System.getProperty("os.name"));
 
@@ -68,5 +70,14 @@ public class Main {
 
     public static ArrayList<DynmapServer> getDynmapServers() {
         return new ArrayList<>(dynmapServers);
+    }
+
+    public static Object[] getPlayers() {
+        Object[] players = new Object[0];
+        for(DynmapServer dynmapServer : dynmapServers) {
+            players = concat(players, dynmapServer.getPlayers());
+        }
+
+        return players;
     }
 }

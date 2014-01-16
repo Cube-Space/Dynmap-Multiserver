@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.cubespace.dynmap.multiserver.Lib.Util.Concat.concat;
+
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
@@ -37,6 +39,8 @@ public class DynmapServer {
     //Some Dynmap config things
     private File file;
 
+    private Object[] players = new Object[0];
+
     private class DynmapServerUpdater extends Thread {
         private int updateInterval;
 
@@ -52,11 +56,14 @@ public class DynmapServer {
                     logger.warn("Error in getting new Worlds", e);
                 }
 
+                players = new Object[0];
+
                 for(Map.Entry<String, DynmapWorldConfig> dynmapWorldConfig : new HashMap<>(dynmapWorldConfigs).entrySet()) {
                     File dynmapWorldConfigFile = new File(file, "standalone" + File.separator + "dynmap_" + dynmapWorldConfig.getKey() + ".json");
                     try(FileReader fileReader = new FileReader(dynmapWorldConfigFile)) {
                         dynmapWorldConfig.setValue(gson.fromJson(fileReader, DynmapWorldConfig.class));
                         dynmapWorldConfigs.put(dynmapWorldConfig.getKey(), dynmapWorldConfig.getValue());
+                        players = concat(players, dynmapWorldConfig.getValue().getPlayers());
                     } catch (FileNotFoundException e) {
                         logger.warn("Could not update Dynmap World", e);
                     } catch (IOException e) {
@@ -149,5 +156,9 @@ public class DynmapServer {
 
     public Component[] getComponents() {
         return dynmapConfig.getComponents();
+    }
+
+    public Object[] getPlayers() {
+        return players;
     }
 }

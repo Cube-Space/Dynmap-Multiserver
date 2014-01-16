@@ -28,6 +28,7 @@ import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+import static net.cubespace.dynmap.multiserver.Lib.Util.Concat.concat;
 
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
@@ -108,24 +109,6 @@ public class DynmapConfigJSONHandler implements IHandler {
             responseStr = gson.toJson(config);
             start = System.currentTimeMillis();
         }
-    }
-
-    private DynmapWorld[] concat(DynmapWorld[] A, DynmapWorld[] B) {
-        int aLen = A.length;
-        int bLen = B.length;
-        DynmapWorld[] C= new DynmapWorld[aLen+bLen];
-        System.arraycopy(A, 0, C, 0, aLen);
-        System.arraycopy(B, 0, C, aLen, bLen);
-        return C;
-    }
-
-    private Component[] concat(Component[] A, Component[] B) {
-        int aLen = A.length;
-        int bLen = B.length;
-        Component[] C= new Component[aLen+bLen];
-        System.arraycopy(A, 0, C, 0, aLen);
-        System.arraycopy(B, 0, C, aLen, bLen);
-        return C;
     }
 
     @Override
