@@ -2,6 +2,10 @@ package net.cubespace.dynmap.multiserver;
 
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.ComponentDeserializer;
+import net.cubespace.dynmap.multiserver.GSON.Components.Chat;
+import net.cubespace.dynmap.multiserver.GSON.Components.ChatBallon;
+import net.cubespace.dynmap.multiserver.GSON.Components.Clock;
+import net.cubespace.dynmap.multiserver.GSON.Components.Location;
 import net.cubespace.dynmap.multiserver.GSON.Components.PlayerMarkers;
 import net.cubespace.dynmap.multiserver.GSON.Components.Spawn;
 import net.cubespace.dynmap.multiserver.HTTP.HTTPServer;
@@ -23,7 +27,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Init the Logger
-        logger.info("Booting up Dynmap-MultiServer v0.1.1");
+        logger.info("Booting up Dynmap-MultiServer v0.2.0");
         logger.info("Running on Java Version: " + System.getProperty("java.version") + " " + System.getProperty("os.arch"));
         logger.info("Running on OS: " + System.getProperty("os.name"));
 
@@ -47,6 +51,10 @@ public class Main {
         //Register all Components
         ComponentDeserializer.addComponent(new Spawn());
         ComponentDeserializer.addComponent(new PlayerMarkers());
+        ComponentDeserializer.addComponent(new Chat());
+        ComponentDeserializer.addComponent(new ChatBallon());
+        ComponentDeserializer.addComponent(new Clock());
+        ComponentDeserializer.addComponent(new Location());
 
         //Load up the Dynmaps
         logger.info("Loading the Dynmaps");
