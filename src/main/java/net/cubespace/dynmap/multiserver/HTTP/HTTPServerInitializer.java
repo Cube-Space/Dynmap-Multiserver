@@ -49,7 +49,7 @@ public class HTTPServerInitializer extends ChannelInitializer<SocketChannel> {
         ConfigJSHandler configJSHandler = new ConfigJSHandler();
         httpServerHandler.addHandler("/standalone/config.js", configJSHandler);
 
-        DynmapConfigJSONHandler dynmapConfigJSONHandler = new DynmapConfigJSONHandler();
+        DynmapConfigJSONHandler dynmapConfigJSONHandler = new DynmapConfigJSONHandler(config);
         httpServerHandler.addHandler("/standalone/dynmap_config.json", dynmapConfigJSONHandler);
 
         MarkerHandler markerHandler = new MarkerHandler();

@@ -18,5 +18,6 @@ public class Main extends Config {
 
     public Integer Webserver_Port = 8080;
     public String Webserver_webDir = "web/";
+    public String Webserver_Title = "Awesome Multiserver Dynmap";
     public ArrayList<Dynmap> DynMap = new ArrayList<>();
 }

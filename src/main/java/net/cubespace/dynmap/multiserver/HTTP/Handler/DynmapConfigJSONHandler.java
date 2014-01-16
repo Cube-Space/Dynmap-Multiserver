@@ -8,12 +8,12 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
+import net.cubespace.dynmap.multiserver.Config.Main;
 import net.cubespace.dynmap.multiserver.DynmapServer;
 import net.cubespace.dynmap.multiserver.GSON.Component;
 import net.cubespace.dynmap.multiserver.GSON.DynmapConfig;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorld;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
-import net.cubespace.dynmap.multiserver.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +55,7 @@ public class DynmapConfigJSONHandler implements IHandler {
         }
     }
 
-    public DynmapConfigJSONHandler() {
+    public DynmapConfigJSONHandler(Main mainConfig) {
         if(gson == null) gson = new Gson();
 
         if(config == null) {
@@ -63,6 +63,7 @@ public class DynmapConfigJSONHandler implements IHandler {
             config.setDefaultmap("flat");
             config.setDefaultworld("world");
             config.setConfighash(0);
+            config.setTitle(mainConfig.Webserver_Title);
 
             responseStr = gson.toJson(config);
         }
@@ -85,7 +86,7 @@ public class DynmapConfigJSONHandler implements IHandler {
         config.setConfighash(0);
         String temp = gson.toJson(config);
 
-        for(DynmapServer dynmapServer : Main.getDynmapServers()) {
+        for(DynmapServer dynmapServer : net.cubespace.dynmap.multiserver.Main.getDynmapServers()) {
             dynmapWorlds = concat(dynmapWorlds, dynmapServer.getWorlds());
 
             for(Component component : dynmapServer.getComponents()) {

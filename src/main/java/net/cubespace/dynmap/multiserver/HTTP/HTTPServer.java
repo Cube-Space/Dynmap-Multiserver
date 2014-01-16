@@ -20,7 +20,7 @@ public class HTTPServer extends Thread {
 
     public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
 
         try {
             ServerBootstrap b = new ServerBootstrap();
