@@ -1,0 +1,8 @@
+.idea
+Dynmap-MultiServer.iml
+web.zip
+web/
+build/
+config/
+logs/
+target/
