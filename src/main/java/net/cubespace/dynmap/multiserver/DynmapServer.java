@@ -8,6 +8,7 @@ import net.cubespace.dynmap.multiserver.GSON.ComponentDeserializer;
 import net.cubespace.dynmap.multiserver.GSON.DynmapConfig;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorld;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorldConfig;
+import net.cubespace.dynmap.multiserver.GSON.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +41,8 @@ public class DynmapServer {
     //Some Dynmap config things
     private File file;
 
-    private Object[] players = new Object[0];
+    private ArrayList<String> alreadyPlayers = new ArrayList<>();
+    private Player[] players = new Player[0];
 
     private class DynmapServerUpdater extends Thread {
         private int updateInterval;
@@ -56,14 +59,21 @@ public class DynmapServer {
                     logger.warn("Error in getting new Worlds", e);
                 }
 
-                players = new Object[0];
+                players = new Player[0];
+                alreadyPlayers = new ArrayList<>();
 
                 for(Map.Entry<String, DynmapWorldConfig> dynmapWorldConfig : new HashMap<>(dynmapWorldConfigs).entrySet()) {
                     File dynmapWorldConfigFile = new File(file, "standalone" + File.separator + "dynmap_" + dynmapWorldConfig.getKey() + ".json");
                     try(FileReader fileReader = new FileReader(dynmapWorldConfigFile)) {
                         dynmapWorldConfig.setValue(gson.fromJson(fileReader, DynmapWorldConfig.class));
                         dynmapWorldConfigs.put(dynmapWorldConfig.getKey(), dynmapWorldConfig.getValue());
-                        players = concat(players, dynmapWorldConfig.getValue().getPlayers());
+
+                        for(Player player : dynmapWorldConfig.getValue().getPlayers()) {
+                            if(!alreadyPlayers.contains(player.getName())) {
+                                alreadyPlayers.add(player.getName());
+                                players = concat(players, new Player[]{player});
+                            }
+                        }
                     } catch (FileNotFoundException e) {
                         logger.warn("Could not update Dynmap World", e);
                     } catch (IOException e) {
@@ -158,7 +168,7 @@ public class DynmapServer {
         return dynmapConfig.getComponents();
     }
 
-    public Object[] getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 }

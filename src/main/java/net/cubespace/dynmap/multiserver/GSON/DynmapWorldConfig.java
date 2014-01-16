@@ -10,7 +10,7 @@ public class DynmapWorldConfig {
     private Boolean isThundering;
     private Integer servertime;
     private Integer currentcount;
-    private Object[] players;
+    private Player[] players;
     private Integer confighash;
 
     public Long getTimestamp() {
@@ -37,7 +37,7 @@ public class DynmapWorldConfig {
         return currentcount;
     }
 
-    public Object[] getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -69,7 +69,7 @@ public class DynmapWorldConfig {
         this.currentcount = currentcount;
     }
 
-    public void setPlayers(Object[] players) {
+    public void setPlayers(Player[] players) {
         this.players = players;
     }
 

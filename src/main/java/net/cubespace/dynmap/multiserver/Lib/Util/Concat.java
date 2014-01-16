@@ -2,15 +2,16 @@ package net.cubespace.dynmap.multiserver.Lib.Util;
 
 import net.cubespace.dynmap.multiserver.GSON.Component;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorld;
+import net.cubespace.dynmap.multiserver.GSON.Player;
 
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
 public class Concat {
-    public static Object[] concat(Object[] A, Object[] B) {
+    public static Player[] concat(Player[] A, Player[] B) {
         int aLen = A.length;
         int bLen = B.length;
-        Object[] C= new Object[aLen+bLen];
+        Player[] C= new Player[aLen+bLen];
         System.arraycopy(A, 0, C, 0, aLen);
         System.arraycopy(B, 0, C, aLen, bLen);
         return C;

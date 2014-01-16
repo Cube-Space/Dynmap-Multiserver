@@ -8,6 +8,7 @@ import net.cubespace.dynmap.multiserver.GSON.Components.Clock;
 import net.cubespace.dynmap.multiserver.GSON.Components.Location;
 import net.cubespace.dynmap.multiserver.GSON.Components.PlayerMarkers;
 import net.cubespace.dynmap.multiserver.GSON.Components.Spawn;
+import net.cubespace.dynmap.multiserver.GSON.Player;
 import net.cubespace.dynmap.multiserver.HTTP.HTTPServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Init the Logger
-        logger.info("Booting up Dynmap-MultiServer v0.2.1");
+        logger.info("Booting up Dynmap-MultiServer v0.2.2");
         logger.info("Running on Java Version: " + System.getProperty("java.version") + " " + System.getProperty("os.arch"));
         logger.info("Running on OS: " + System.getProperty("os.name"));
 
@@ -80,8 +81,8 @@ public class Main {
         return new ArrayList<>(dynmapServers);
     }
 
-    public static Object[] getPlayers() {
-        Object[] players = new Object[0];
+    public static Player[] getPlayers() {
+        Player[] players = new Player[0];
         for(DynmapServer dynmapServer : dynmapServers) {
             players = concat(players, dynmapServer.getPlayers());
         }
