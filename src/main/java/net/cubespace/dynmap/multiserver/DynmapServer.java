@@ -149,7 +149,14 @@ public class DynmapServer {
         dynmapConfigFile = new File(file, "standalone" + File.separator + "dynmap_config.json");
 
         if(!dynmapConfigFile.exists()) {
-            throw  new DynmapInitException("dynmap_config.json in the standalone Folder is missing. Be sure you started the Dynmap");
+            try {
+                Thread.sleep(200);
+                if(!dynmapConfigFile.exists()) {
+                    throw  new DynmapInitException("dynmap_config.json in the standalone Folder is missing. Be sure you started the Dynmap");
+                }
+            } catch (InterruptedException e) {
+                throw  new DynmapInitException("dynmap_config.json in the standalone Folder is missing. Be sure you started the Dynmap");
+            }
         }
     }
 
