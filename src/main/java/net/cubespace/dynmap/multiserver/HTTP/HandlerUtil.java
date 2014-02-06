@@ -35,7 +35,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
 public class HandlerUtil {
-    private static final Pattern INSECURE_URI = Pattern.compile(".*[<>&\"].*");
+    private static final Pattern INSECURE_URI = Pattern.compile(".*[<>\"].*");
     public static final String HTTP_DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss zzz";
     public static final String HTTP_DATE_GMT_TIMEZONE = "GMT";
     public static final Integer HTTP_CACHE_SECONDS = 60;

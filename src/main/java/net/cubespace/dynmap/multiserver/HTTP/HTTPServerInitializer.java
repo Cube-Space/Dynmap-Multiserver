@@ -34,11 +34,6 @@ public class HTTPServerInitializer extends ChannelInitializer<SocketChannel> {
         // Create a default pipeline implementation.
         ChannelPipeline pipeline = ch.pipeline();
 
-        // Uncomment the following line if you want HTTPS
-        //SSLEngine engine = SecureChatSslContextFactory.getServerContext().createSSLEngine();
-        //engine.setUseClientMode(false);
-        //pipeline.addLast("ssl", new SslHandler(engine));
-
         pipeline.addLast("decoder", new HttpRequestDecoder());
         pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
         pipeline.addLast("encoder", new HttpResponseEncoder());
@@ -70,6 +65,6 @@ public class HTTPServerInitializer extends ChannelInitializer<SocketChannel> {
         staticFileHandler.addIndex("index.html");
         httpServerHandler.addHandler(".*", staticFileHandler);
 
-        pipeline.addLast("handler", httpServerHandler); // Specify false if SSL.
+        pipeline.addLast("handler", httpServerHandler);
     }
 }

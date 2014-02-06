@@ -37,8 +37,8 @@ public class StaticFileHandler implements IHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Check for index
-        final String path = webDir + File.separator + request.getUri().split("\\?")[0];
-        final String uri = request.getUri().split("\\?")[0];
+        final String path = webDir + File.separator + request.getUri();
+        final String uri = request.getUri();
         if(uri.endsWith("/")) {
             for(String index : indexFiles) {
                 File checkFile = new File(path, index);
