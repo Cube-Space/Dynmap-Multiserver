@@ -27,6 +27,8 @@ public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
 
     private static ArrayList<DynmapServer> dynmapServers = new ArrayList<>();
+    private static String dynmapVersion;
+    private static String coreVersion;
 
     public static void main(String[] args) {
         //Init the Logger
@@ -92,5 +94,35 @@ public class Main {
         }
 
         return players;
+    }
+
+    public static synchronized void updateCoreVersion(String coreVersion) {
+        if(Main.coreVersion != null) {
+            if(!Main.coreVersion.equals(coreVersion)) {
+                logger.error("You use different Versions of Dynmaps");
+                System.exit(-1);
+            }
+        } else {
+            Main.coreVersion = coreVersion;
+        }
+    }
+
+    public static synchronized void updateDynmapVersion(String dynmapVersion) {
+        if(Main.dynmapVersion != null) {
+            if(!Main.dynmapVersion.equals(dynmapVersion)) {
+                logger.error("You use different Versions of Dynmaps");
+                System.exit(-1);
+            }
+        } else {
+            Main.dynmapVersion = dynmapVersion;
+        }
+    }
+
+    public static String getDynmapVersion() {
+        return dynmapVersion;
+    }
+
+    public static String getCoreVersion() {
+        return coreVersion;
     }
 }

@@ -107,6 +107,8 @@ public class DynmapConfigJSONHandler implements IHandler {
 
         config.setWorlds(dynmapWorlds);
         config.setComponents(components);
+        config.setCoreversion(net.cubespace.dynmap.multiserver.Main.getCoreVersion());
+        config.setDynmapversion(net.cubespace.dynmap.multiserver.Main.getDynmapVersion());
 
         if(!responseStr.equals(temp)) {
             config.setConfighash(0);

@@ -136,6 +136,8 @@ public class DynmapServer {
         try(FileReader fileReader = new FileReader(dynmapConfigFile)) {
             Gson gsonDymapConfig = new GsonBuilder().registerTypeAdapter(Component.class, new ComponentDeserializer()).create();
             dynmapConfig = gsonDymapConfig.fromJson(fileReader, DynmapConfig.class);
+            Main.updateCoreVersion(dynmapConfig.getCoreversion());
+            Main.updateDynmapVersion(dynmapConfig.getDynmapversion());
         } catch (IOException e) {
             throw new DynmapInitException("Could not parse dynmap_config.json", e);
         }
