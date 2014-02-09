@@ -1,5 +1,6 @@
 package net.cubespace.dynmap.multiserver;
 
+import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.ComponentDeserializer;
 import net.cubespace.dynmap.multiserver.GSON.Components.Chat;
@@ -32,14 +33,19 @@ public class Main {
 
     public static void main(String[] args) {
         //Init the Logger
-        logger.info("Booting up Dynmap-MultiServer v0.2.5");
+        logger.info("Booting up Dynmap-MultiServer v0.4.0");
         logger.info("Running on Java Version: " + System.getProperty("java.version") + " " + System.getProperty("os.arch"));
         logger.info("Running on OS: " + System.getProperty("os.name"));
 
         //Init the Config
         logger.info("Getting the config...");
         net.cubespace.dynmap.multiserver.Config.Main config = new net.cubespace.dynmap.multiserver.Config.Main();
-        config.init();
+        try {
+            config.init();
+        } catch (InvalidConfigurationException e) {
+            logger.error("Could not init config", e);
+            System.exit(-1);
+        }
 
         //Normalize the WebPath
         File file = new File(System.getProperty("user.dir"), config.Webserver_webDir);

@@ -1,6 +1,7 @@
 package net.cubespace.dynmap.multiserver.Config;
 
-import net.cubespace.dynmap.multiserver.Lib.Config.Config;
+
+import net.cubespace.Yamler.Config.Config;
 
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)

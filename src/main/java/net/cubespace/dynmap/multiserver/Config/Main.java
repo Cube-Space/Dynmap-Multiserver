@@ -1,6 +1,7 @@
 package net.cubespace.dynmap.multiserver.Config;
 
-import net.cubespace.dynmap.multiserver.Lib.Config.Config;
+
+import net.cubespace.Yamler.Config.Config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import java.util.ArrayList;
  */
 public class Main extends Config {
     public Main() {
-        super();
         CONFIG_FILE = new File("config/main.yml");
 
         DynMap.add(new Dynmap());
     }
 
+    public String Webserver_IP = "0.0.0.0";
     public Integer Webserver_Port = 8080;
     public String Webserver_webDir = "web/";
     public String Webserver_Title = "Awesome Multiserver Dynmap";
