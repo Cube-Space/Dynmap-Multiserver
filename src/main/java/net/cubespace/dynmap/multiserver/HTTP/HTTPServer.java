@@ -18,16 +18,18 @@ public class HTTPServer extends Thread {
     private final String ip;
     private final int port;
     private final Main config;
+    private final int workerThreads;
 
     public HTTPServer(Main config) {
         this.ip = config.Webserver_IP;
         this.port = config.Webserver_Port;
+        this.workerThreads = config.Webserver_WorkerThreads;
         this.config = config;
     }
 
     public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(workerThreads);
 
         try {
             ServerBootstrap b = new ServerBootstrap();
