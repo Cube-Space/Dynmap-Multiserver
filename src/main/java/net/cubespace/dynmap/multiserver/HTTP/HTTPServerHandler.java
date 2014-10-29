@@ -6,6 +6,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import net.cubespace.dynmap.multiserver.HTTP.Handler.IHandler;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,7 @@ import static io.netty.handler.codec.http.HttpResponseStatus.METHOD_NOT_ALLOWED;
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
 public class HTTPServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
-    private HashMap<String, IHandler> handlers = new HashMap<>();
+    private HashMap<String, IHandler> handlers = new LinkedHashMap<>();
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
