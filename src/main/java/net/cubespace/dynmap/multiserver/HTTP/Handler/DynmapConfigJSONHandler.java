@@ -20,15 +20,12 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
-import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
-import static net.cubespace.dynmap.multiserver.Lib.Util.Concat.concat;
 
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
@@ -49,7 +46,7 @@ public class DynmapConfigJSONHandler implements IHandler {
         }
 
         public void run() {
-            while(true) {
+            while (true) {
                 try {
                     updateJson();
                     Thread.sleep(1000);
@@ -61,9 +58,9 @@ public class DynmapConfigJSONHandler implements IHandler {
     }
 
     public DynmapConfigJSONHandler(Main mainConfig) {
-        if(gson == null) gson = new Gson();
+        if (gson == null) gson = new Gson();
 
-        if(config == null) {
+        if (config == null) {
             config = new DynmapConfig();
             config.setDefaultmap("flat");
             config.setDefaultworld("world");
@@ -73,9 +70,9 @@ public class DynmapConfigJSONHandler implements IHandler {
             responseStr = gson.toJson(config);
         }
 
-        if(start == 0) start = System.currentTimeMillis();
+        if (start == 0) start = System.currentTimeMillis();
 
-        if(dynmapConfigJSONUpdater == null) {
+        if (dynmapConfigJSONUpdater == null) {
             dynmapConfigJSONUpdater = new DynmapConfigJSONUpdater();
             dynmapConfigJSONUpdater.start();
         }
@@ -83,23 +80,22 @@ public class DynmapConfigJSONHandler implements IHandler {
 
     private void updateJson() {
         //Worlds
-        DynmapWorld[] dynmapWorlds = new DynmapWorld[0];
-        Component[] components = new Component[0];
+        List<DynmapWorld> dynmapWorlds = new ArrayList<>();
+        List<Component> components = new ArrayList<>();
 
         ArrayList<String> addedComponents = new ArrayList<>();
 
         config.setConfighash(0);
         String temp = gson.toJson(config);
 
-        for(DynmapServer dynmapServer : net.cubespace.dynmap.multiserver.Main.getDynmapServers()) {
-            dynmapWorlds = concat(dynmapWorlds, dynmapServer.getWorlds());
+        for (DynmapServer dynmapServer : net.cubespace.dynmap.multiserver.Main.getDynmapServers()) {
+            dynmapWorlds.addAll(dynmapServer.getWorlds());
 
-            for(Component component : dynmapServer.getComponents()) {
-                if(component != null) {
-                    if(!addedComponents.contains(component.type)) {
+            for (Component component : dynmapServer.getComponents()) {
+                if (component != null) {
+                    if (!addedComponents.contains(component.type)) {
                         addedComponents.add(component.type);
-
-                        components = concat(components, new Component[]{component});
+                        components.add(component);
                     }
                 }
             }
@@ -110,7 +106,7 @@ public class DynmapConfigJSONHandler implements IHandler {
         config.setCoreversion(net.cubespace.dynmap.multiserver.Main.getCoreVersion());
         config.setDynmapversion(net.cubespace.dynmap.multiserver.Main.getDynmapVersion());
 
-        if(!responseStr.equals(temp)) {
+        if (!responseStr.equals(temp)) {
             config.setConfighash(0);
             responseStr = gson.toJson(config);
             start = System.currentTimeMillis();
@@ -128,7 +124,7 @@ public class DynmapConfigJSONHandler implements IHandler {
             // Only compare up to the second because the datetime format we send to the client
             // does not have milliseconds
             long ifModifiedSinceDateSeconds = ifModifiedSinceDate.getTime() / 1000;
-            long fileLastModifiedSeconds =  start / 1000;
+            long fileLastModifiedSeconds = start / 1000;
             if (ifModifiedSinceDateSeconds == fileLastModifiedSeconds) {
                 HandlerUtil.sendNotModified(ctx);
                 return;
