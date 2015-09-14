@@ -1,9 +1,9 @@
 package net.cubespace.dynmap.multiserver;
 
 import net.cubespace.dynmap.multiserver.GSON.*;
+import net.cubespace.dynmap.multiserver.util.AbstractFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 
 public interface DynmapServer {
@@ -17,5 +17,5 @@ public interface DynmapServer {
 
     Collection<Player> getPlayers();
 
-    InputStream getAsInputStream(String path) throws IOException;
+    AbstractFile getAsInputStream(String path) throws IOException;
 }

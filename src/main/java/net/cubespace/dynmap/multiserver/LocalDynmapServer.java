@@ -4,10 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.*;
+import net.cubespace.dynmap.multiserver.util.AbstractFile;
+import net.cubespace.dynmap.multiserver.util.LocalAbstractFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -174,7 +179,7 @@ public class LocalDynmapServer implements DynmapServer {
     }
 
     @Override
-    public InputStream getAsInputStream(String path) throws FileNotFoundException {
-        return new FileInputStream(new File(file, path.replace("/", File.separator)));
+    public AbstractFile getAsInputStream(String path) {
+        return new LocalAbstractFile(new File(file, path.replace("/", File.separator)));
     }
 }
