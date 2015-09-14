@@ -17,5 +17,5 @@ public interface DynmapServer {
 
     Collection<Player> getPlayers();
 
-    AbstractFile getAsInputStream(String path) throws IOException;
+    AbstractFile getFile(String path) throws IOException;
 }

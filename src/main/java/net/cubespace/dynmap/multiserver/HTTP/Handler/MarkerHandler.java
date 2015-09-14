@@ -1,12 +1,8 @@
 package net.cubespace.dynmap.multiserver.HTTP.Handler;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.DefaultFileRegion;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.LastHttpContent;
+import io.netty.handler.codec.http.*;
+import io.netty.handler.stream.ChunkedStream;
 import net.cubespace.dynmap.multiserver.DynmapServer;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorld;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
@@ -19,14 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.ACCEPT_ENCODING;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
-import static io.netty.handler.codec.http.HttpHeaders.Names.VARY;
-import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
-import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
@@ -38,9 +28,9 @@ public class MarkerHandler implements IHandler {
         //Get the correct DynmapServer
         String path = "";
         String world = request.getUri().split("/")[3].replace("marker_", "").replace(".json", "");
-        for(DynmapServer dynmapServer : Main.getDynmapServers()) {
-            for(DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
-                if(dynmapWorld.getName().equals(world)) {
+        for (DynmapServer dynmapServer : Main.getDynmapServers()) {
+            for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
+                if (dynmapWorld.getName().equals(world)) {
                     path = dynmapServer.getFolder().getAbsolutePath() + File.separator + request.getUri();
                 }
             }
@@ -86,7 +76,7 @@ public class MarkerHandler implements IHandler {
 
         HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
-        HandlerUtil.setContentTypeHeader(response, file);
+        HandlerUtil.setContentTypeHeader(response, file.getName());
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
         response.headers().set(CONTENT_LENGTH, fileLength);
@@ -97,7 +87,7 @@ public class MarkerHandler implements IHandler {
         ctx.write(response);
 
         // Write the content.
-        ctx.write(new DefaultFileRegion(raf.getChannel(), 0, fileLength));
+        ctx.write(new ChunkedStream(file.getInputStream()));
         ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
     }
 }

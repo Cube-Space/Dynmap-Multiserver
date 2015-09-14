@@ -1,31 +1,21 @@
 package net.cubespace.dynmap.multiserver.HTTP.Handler;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.DefaultFileRegion;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.LastHttpContent;
+import io.netty.handler.codec.http.*;
+import io.netty.handler.stream.ChunkedStream;
 import net.cubespace.dynmap.multiserver.DynmapServer;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 import net.cubespace.dynmap.multiserver.Main;
+import net.cubespace.dynmap.multiserver.util.AbstractFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.ACCEPT_ENCODING;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
-import static io.netty.handler.codec.http.HttpHeaders.Names.VARY;
-import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
-import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
@@ -35,9 +25,9 @@ public class FacesFileHandler implements IHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
-        for(DynmapServer dynmapServer : Main.getDynmapServers()) {
-            File file = new File(dynmapServer.getFolder(), request.getUri());
-            if(file.exists()) {
+        for (DynmapServer dynmapServer : Main.getDynmapServers()) {
+            AbstractFile file = dynmapServer.getFile(request.getUri());
+            if (file.exists()) {
                 if (file.isHidden() || !file.exists()) {
                     HandlerUtil.sendError(ctx, NOT_FOUND);
                     return;
@@ -65,22 +55,14 @@ public class FacesFileHandler implements IHandler {
                     }
                 }
 
-                RandomAccessFile raf;
-                try {
-                    raf = new RandomAccessFile(file, "r");
-                } catch (FileNotFoundException fnfe) {
-                    HandlerUtil.sendError(ctx, NOT_FOUND);
-                    return;
-                }
-
-                long fileLength = raf.length();
+                ReadableByteChannel channel = Channels.newChannel(file.getInputStream());
 
                 HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
-                HandlerUtil.setContentTypeHeader(response, file);
+                HandlerUtil.setContentTypeHeader(response, file.getName());
                 HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
-                response.headers().set(CONTENT_LENGTH, fileLength);
+                response.headers().set(CONTENT_LENGTH, file.length());
                 response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
                 response.headers().set(VARY, ACCEPT_ENCODING);
 
@@ -88,7 +70,7 @@ public class FacesFileHandler implements IHandler {
                 ctx.write(response);
 
                 // Write the content.
-                ctx.write(new DefaultFileRegion(raf.getChannel(), 0, fileLength));
+                ctx.write(new ChunkedStream(file.getInputStream()));
                 ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
                 return;
             }

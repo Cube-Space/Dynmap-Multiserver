@@ -8,5 +8,13 @@ public interface AbstractFile {
 
     boolean exists();
 
-    long getLastModified();
+    long lastModified();
+
+    long length();
+
+    boolean isHidden();
+
+    boolean isFile();
+
+    String getName();
 }

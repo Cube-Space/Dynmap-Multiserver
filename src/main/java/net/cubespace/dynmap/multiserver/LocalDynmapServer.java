@@ -179,7 +179,7 @@ public class LocalDynmapServer implements DynmapServer {
     }
 
     @Override
-    public AbstractFile getAsInputStream(String path) {
+    public AbstractFile getFile(String path) {
         return new LocalAbstractFile(new File(file, path.replace("/", File.separator)));
     }
 }

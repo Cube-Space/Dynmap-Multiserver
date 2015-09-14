@@ -23,7 +23,27 @@ public class LocalAbstractFile implements AbstractFile {
     }
 
     @Override
-    public long getLastModified() {
+    public long lastModified() {
         return file.lastModified();
+    }
+
+    @Override
+    public long length() {
+        return file.length();
+    }
+
+    @Override
+    public boolean isHidden() {
+        return file.isHidden();
+    }
+
+    @Override
+    public boolean isFile() {
+        return file.isFile();
+    }
+
+    @Override
+    public String getName() {
+        return file.getName();
     }
 }
