@@ -7,10 +7,8 @@ import net.cubespace.dynmap.multiserver.DynmapServer;
 import net.cubespace.dynmap.multiserver.GSON.DynmapWorld;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 import net.cubespace.dynmap.multiserver.Main;
+import net.cubespace.dynmap.multiserver.util.AbstractFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,18 +24,18 @@ public class MarkerHandler implements IHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
-        String path = "";
+        AbstractFile path = null;
         String world = request.getUri().split("/")[3].replace("marker_", "").replace(".json", "");
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
             for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
                 if (dynmapWorld.getName().equals(world)) {
-                    path = dynmapServer.getFolder().getAbsolutePath() + File.separator + request.getUri();
+                    path = dynmapServer.getFile(request.getUri());
                 }
             }
         }
 
-        File file = new File(path.replace("/", File.separator));
-        if (file.isHidden() || !file.exists()) {
+        AbstractFile file = path;
+        if (file == null || file.isHidden() || !file.exists()) {
             HandlerUtil.sendError(ctx, NOT_FOUND);
             return;
         }
@@ -64,22 +62,12 @@ public class MarkerHandler implements IHandler {
             }
         }
 
-        RandomAccessFile raf;
-        try {
-            raf = new RandomAccessFile(file, "r");
-        } catch (FileNotFoundException fnfe) {
-            HandlerUtil.sendError(ctx, NOT_FOUND);
-            return;
-        }
-
-        long fileLength = raf.length();
-
         HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
         HandlerUtil.setContentTypeHeader(response, file.getName());
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
-        response.headers().set(CONTENT_LENGTH, fileLength);
+        response.headers().set(CONTENT_LENGTH, file.length());
         response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
         response.headers().set(VARY, ACCEPT_ENCODING);
 
