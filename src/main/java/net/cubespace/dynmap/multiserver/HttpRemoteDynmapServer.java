@@ -20,6 +20,19 @@ public class HttpRemoteDynmapServer extends AbstractDynmapServer {
 
     @Override
     public AbstractFile getFile(String path) throws IOException {
-        return new HttpRemoteFile((url + "/" + path).replace(File.separator, "/").replace("//", "/"));
+        path = path.replace(File.separator, "/");
+        if (url.endsWith("/")) {
+            if (path.startsWith("/")) {
+                return new HttpRemoteFile(url + path.substring(1));
+            } else {
+                return new HttpRemoteFile(url + path.substring(1));
+            }
+        } else {
+            if (path.startsWith("/")) {
+                return new HttpRemoteFile(url + path);
+            } else {
+                return new HttpRemoteFile(url + "/" + path);
+            }
+        }
     }
 }
