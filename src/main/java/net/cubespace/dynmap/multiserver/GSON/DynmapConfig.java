@@ -2,6 +2,9 @@ package net.cubespace.dynmap.multiserver.GSON;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
@@ -15,7 +18,7 @@ public class DynmapConfig {
     private Boolean webacht_requires_login = false;
     private String quitmessage = "%playername% quit";
     private Integer confighash;
-    private DynmapWorld[] worlds = new DynmapWorld[0];
+    private List<DynmapWorld> worlds = new ArrayList<>();
     private String showlayercontrol = "true";
     private String title = "Awesome Multiserver Dynmap";
     private String defaultmap;
@@ -44,7 +47,7 @@ public class DynmapConfig {
     @SerializedName("webchat-interval")
     private Integer webchat_interval = 5;
     private Boolean allowwebchat = false;
-    private Component[] components = new Component[0];
+    private List<Component> components = new ArrayList<>();
     @SerializedName("msg-chatrequireslogin")
     private String msg_chatrequireslogin = "Chat requires login";
     @SerializedName("msg-hiddennamequit")
@@ -74,7 +77,7 @@ public class DynmapConfig {
         return confighash;
     }
 
-    public DynmapWorld[] getWorlds() {
+    public List<DynmapWorld> getWorlds() {
         return worlds;
     }
 
@@ -174,7 +177,7 @@ public class DynmapConfig {
         return allowwebchat;
     }
 
-    public Component[] getComponents() {
+    public List<Component> getComponents() {
         return components;
     }
 
@@ -210,7 +213,7 @@ public class DynmapConfig {
         this.confighash = confighash;
     }
 
-    public void setWorlds(DynmapWorld[] worlds) {
+    public void setWorlds(List<DynmapWorld> worlds) {
         this.worlds = worlds;
     }
 
@@ -310,7 +313,7 @@ public class DynmapConfig {
         this.allowwebchat = allowwebchat;
     }
 
-    public void setComponents(Component[] components) {
+    public void setComponents(List<Component> components) {
         this.components = components;
     }
 

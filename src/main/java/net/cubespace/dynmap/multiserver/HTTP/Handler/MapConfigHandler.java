@@ -14,9 +14,7 @@ import net.cubespace.dynmap.multiserver.GSON.DynmapWorldConfig;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 import net.cubespace.dynmap.multiserver.Main;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -31,14 +29,14 @@ public class MapConfigHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         String world = request.getUri().split("/")[3].split("\\.")[0];
-        for(DynmapServer dynmapServer : Main.getDynmapServers()) {
-            for(DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
-                if(dynmapWorld.getName().equals(world)) {
+        for (DynmapServer dynmapServer : Main.getDynmapServers()) {
+            for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
+                if (dynmapWorld.getName().equals(world)) {
                     DynmapWorldConfig dynmapWorldConfig = dynmapServer.getWorldConfig(dynmapWorld.getName());
                     dynmapWorldConfig.setConfighash(0);
 
                     dynmapWorldConfig.setPlayers(Main.getPlayers());
-                    dynmapWorldConfig.setCurrentcount(dynmapWorldConfig.getPlayers().length);
+                    dynmapWorldConfig.setCurrentcount(dynmapWorldConfig.getPlayers().size());
 
                     String responseStr = gson.toJson(dynmapWorldConfig);
 

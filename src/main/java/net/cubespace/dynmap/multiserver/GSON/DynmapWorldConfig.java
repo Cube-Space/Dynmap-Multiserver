@@ -1,5 +1,7 @@
 package net.cubespace.dynmap.multiserver.GSON;
 
+import java.util.List;
+
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
@@ -10,7 +12,7 @@ public class DynmapWorldConfig {
     private Boolean isThundering;
     private Integer servertime;
     private Integer currentcount;
-    private Player[] players;
+    private List<Player> players;
     private Integer confighash;
 
     public Long getTimestamp() {
@@ -37,7 +39,7 @@ public class DynmapWorldConfig {
         return currentcount;
     }
 
-    public Player[] getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -69,7 +71,7 @@ public class DynmapWorldConfig {
         this.currentcount = currentcount;
     }
 
-    public void setPlayers(Player[] players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 

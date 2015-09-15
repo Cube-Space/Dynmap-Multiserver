@@ -2,11 +2,7 @@ package net.cubespace.dynmap.multiserver.HTTP.Handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.LastHttpContent;
+import io.netty.handler.codec.http.*;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 
 import java.io.File;
@@ -17,14 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.ACCEPT_ENCODING;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
-import static io.netty.handler.codec.http.HttpHeaders.Names.VARY;
-import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
-import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
@@ -39,10 +29,10 @@ public class StaticFileHandler implements IHandler {
         //Check for index
         final String path = webDir + File.separator + request.getUri();
         final String uri = request.getUri();
-        if(uri.endsWith("/")) {
-            for(String index : indexFiles) {
+        if (uri.endsWith("/")) {
+            for (String index : indexFiles) {
                 File checkFile = new File(path, index);
-                if(checkFile.exists()) {
+                if (checkFile.exists()) {
                     HandlerUtil.sendRedirect(ctx, uri + index);
                     return;
                 }
@@ -99,7 +89,7 @@ public class StaticFileHandler implements IHandler {
 
         HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
-        HandlerUtil.setContentTypeHeader(response, file);
+        HandlerUtil.setContentTypeHeader(response, file.getName());
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
         response.headers().set(CONTENT_LENGTH, fileLength);

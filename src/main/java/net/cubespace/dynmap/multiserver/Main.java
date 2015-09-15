@@ -3,14 +3,7 @@ package net.cubespace.dynmap.multiserver;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.ComponentDeserializer;
-import net.cubespace.dynmap.multiserver.GSON.Components.Chat;
-import net.cubespace.dynmap.multiserver.GSON.Components.ChatBallon;
-import net.cubespace.dynmap.multiserver.GSON.Components.Chatbox;
-import net.cubespace.dynmap.multiserver.GSON.Components.Clock;
-import net.cubespace.dynmap.multiserver.GSON.Components.Link;
-import net.cubespace.dynmap.multiserver.GSON.Components.Location;
-import net.cubespace.dynmap.multiserver.GSON.Components.PlayerMarkers;
-import net.cubespace.dynmap.multiserver.GSON.Components.Spawn;
+import net.cubespace.dynmap.multiserver.GSON.Components.*;
 import net.cubespace.dynmap.multiserver.GSON.Player;
 import net.cubespace.dynmap.multiserver.HTTP.HTTPServer;
 import org.slf4j.Logger;
@@ -18,8 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import static net.cubespace.dynmap.multiserver.Lib.Util.Concat.concat;
+import java.util.List;
 
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
@@ -76,7 +68,13 @@ public class Main {
             logger.info("Booting up Dynmap " + dynmap.Folder);
 
             try {
-                DynmapServer dynmapServer = new DynmapServer(dynmap);
+                DynmapServer dynmapServer;
+                if (dynmap.Url != null) {
+                    dynmapServer = new HttpRemoteDynmapServer(dynmap);
+                } else {
+                    dynmapServer = new LocalDynmapServer(dynmap);
+                }
+                dynmapServer.initialize();
                 dynmapServers.add(dynmapServer);
             } catch (DynmapInitException e) {
                 logger.error("Could not boot up this Dynmap", e);
@@ -93,18 +91,18 @@ public class Main {
         return new ArrayList<>(dynmapServers);
     }
 
-    public static Player[] getPlayers() {
-        Player[] players = new Player[0];
-        for(DynmapServer dynmapServer : dynmapServers) {
-            players = concat(players, dynmapServer.getPlayers());
+    public static List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>();
+        for (DynmapServer dynmapServer : dynmapServers) {
+            players.addAll(dynmapServer.getPlayers());
         }
 
         return players;
     }
 
     public static synchronized void updateCoreVersion(String coreVersion) {
-        if(Main.coreVersion != null) {
-            if(!Main.coreVersion.equals(coreVersion)) {
+        if (Main.coreVersion != null) {
+            if (!Main.coreVersion.equals(coreVersion)) {
                 logger.error("You use different Versions of Dynmaps");
                 System.exit(-1);
             }
@@ -114,8 +112,8 @@ public class Main {
     }
 
     public static synchronized void updateDynmapVersion(String dynmapVersion) {
-        if(Main.dynmapVersion != null) {
-            if(!Main.dynmapVersion.equals(dynmapVersion)) {
+        if (Main.dynmapVersion != null) {
+            if (!Main.dynmapVersion.equals(dynmapVersion)) {
                 logger.error("You use different Versions of Dynmaps");
                 System.exit(-1);
             }

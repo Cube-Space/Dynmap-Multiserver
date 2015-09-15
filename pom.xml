@@ -97,11 +97,8 @@
 
     <repositories>
         <repository>
-            <id>cubespace</id>
-            <url>http://nexus.cube-space.net/content/groups/public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>md_5-releases</id>
+            <url>http://repo.md-5.net/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -154,7 +151,7 @@
         <dependency>
             <groupId>net.cubespace</groupId>
             <artifactId>Yamler-Core</artifactId>
-            <version>1.2.6-SNAPSHOT</version>
+            <version>2.3.1-20150720.092759-2</version>
         </dependency>
     </dependencies>
 </project>
