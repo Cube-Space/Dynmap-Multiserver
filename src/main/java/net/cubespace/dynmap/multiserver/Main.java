@@ -69,7 +69,7 @@ public class Main {
 
             try {
                 DynmapServer dynmapServer;
-                if (dynmap.Url.startsWith("http://")) {
+                if (dynmap.Url != null) {
                     dynmapServer = new HttpRemoteDynmapServer(dynmap);
                 } else {
                     dynmapServer = new LocalDynmapServer(dynmap);
