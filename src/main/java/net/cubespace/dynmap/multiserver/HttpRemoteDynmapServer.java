@@ -25,7 +25,7 @@ public class HttpRemoteDynmapServer extends AbstractDynmapServer {
             if (path.startsWith("/")) {
                 return new HttpRemoteFile(url + path.substring(1));
             } else {
-                return new HttpRemoteFile(url + path.substring(1));
+                return new HttpRemoteFile(url + path);
             }
         } else {
             if (path.startsWith("/")) {
