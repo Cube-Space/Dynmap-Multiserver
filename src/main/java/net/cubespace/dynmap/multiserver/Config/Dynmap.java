@@ -8,5 +8,6 @@ import net.cubespace.Yamler.Config.Config;
  */
 public class Dynmap extends Config {
     public String Folder = "test";
+    public String Url = "";
     public Integer UpdateInterval = 1;
 }

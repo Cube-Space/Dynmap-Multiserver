@@ -68,7 +68,13 @@ public class Main {
             logger.info("Booting up Dynmap " + dynmap.Folder);
 
             try {
-                DynmapServer dynmapServer = new LocalDynmapServer(dynmap);
+                DynmapServer dynmapServer;
+                if (dynmap.Url.startsWith("http://")) {
+                    dynmapServer = new HttpRemoteDynmapServer(dynmap);
+                } else {
+                    dynmapServer = new LocalDynmapServer(dynmap);
+                }
+                dynmapServer.initialize();
                 dynmapServers.add(dynmapServer);
             } catch (DynmapInitException e) {
                 logger.error("Could not boot up this Dynmap", e);

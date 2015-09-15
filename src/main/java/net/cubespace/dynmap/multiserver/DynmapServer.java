@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 public interface DynmapServer {
+    void initialize() throws DynmapInitException;
+
     Collection<DynmapWorld> getWorlds();
 
     DynmapWorldConfig getWorldConfig(String name);
