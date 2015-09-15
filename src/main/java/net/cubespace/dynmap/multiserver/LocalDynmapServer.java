@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.*;
 import net.cubespace.dynmap.multiserver.util.AbstractFile;
-import net.cubespace.dynmap.multiserver.util.LocalAbstractFile;
+import net.cubespace.dynmap.multiserver.util.LocalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,6 +180,6 @@ public class LocalDynmapServer implements DynmapServer {
 
     @Override
     public AbstractFile getFile(String path) {
-        return new LocalAbstractFile(new File(file, path.replace("/", File.separator)));
+        return new LocalFile(new File(file, path.replace("/", File.separator)));
     }
 }

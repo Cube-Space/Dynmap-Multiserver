@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class LocalAbstractFile implements AbstractFile {
+public class LocalFile implements AbstractFile {
     private final File file;
 
-    public LocalAbstractFile(File file) {
+    public LocalFile(File file) {
         this.file = file;
     }
 
