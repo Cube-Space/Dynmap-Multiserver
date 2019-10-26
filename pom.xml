@@ -74,6 +74,7 @@
                                     <include>io.netty:*</include>
                                     <include>commons-lang:*</include>
                                     <include>net.cubespace:*</include>
+                                    <include>javax.activation:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -152,6 +153,11 @@
             <groupId>net.cubespace</groupId>
             <artifactId>Yamler-Core</artifactId>
             <version>2.3.1-20150720.092759-2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 </project>
