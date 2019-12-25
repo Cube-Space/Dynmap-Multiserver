@@ -21,5 +21,9 @@ public class Main extends Config {
     public String Webserver_webDir = "web/";
     public String Webserver_Title = "Awesome Multiserver Dynmap";
     public Integer Webserver_WorkerThreads = 16;
+    public String Webserver_DefaultWorld = "world";
+    public String Webserver_DefaultMap = "flat";
+
     public ArrayList<Dynmap> DynMap = new ArrayList<>();
+
 }

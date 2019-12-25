@@ -62,8 +62,8 @@ public class DynmapConfigJSONHandler implements IHandler {
 
         if (config == null) {
             config = new DynmapConfig();
-            config.setDefaultmap("flat");
-            config.setDefaultworld("world");
+            config.setDefaultmap(mainConfig.Webserver_DefaultMap);
+            config.setDefaultworld(mainConfig.Webserver_DefaultWorld);
             config.setConfighash(0);
             config.setTitle(mainConfig.Webserver_Title);
 
