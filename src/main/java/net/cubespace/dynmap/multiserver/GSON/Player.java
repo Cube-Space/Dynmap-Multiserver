@@ -6,7 +6,7 @@ package net.cubespace.dynmap.multiserver.GSON;
 public class Player {
     private String account;
     private Integer armor;
-    private Integer health;
+    private Double health;
     private String name;
     private Integer sort;
     private String type;
@@ -31,11 +31,11 @@ public class Player {
         this.armor = armor;
     }
 
-    public Integer getHealth() {
+    public Double getHealth() {
         return health;
     }
 
-    public void setHealth(Integer health) {
+    public void setHealth(Double health) {
         this.health = health;
     }
 
