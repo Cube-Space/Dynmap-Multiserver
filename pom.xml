@@ -6,7 +6,7 @@
 
     <groupId>net.cubespace.dynmap</groupId>
     <artifactId>Dynmap-MultiServer</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -28,7 +28,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -74,6 +74,7 @@
                                     <include>io.netty:*</include>
                                     <include>commons-lang:*</include>
                                     <include>net.cubespace:*</include>
+                                    <include>com.sun.activation:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
