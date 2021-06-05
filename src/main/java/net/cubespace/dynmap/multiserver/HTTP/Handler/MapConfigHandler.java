@@ -14,7 +14,7 @@ import net.cubespace.dynmap.multiserver.GSON.DynmapWorldConfig;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 import net.cubespace.dynmap.multiserver.Main;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
