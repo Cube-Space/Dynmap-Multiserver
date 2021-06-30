@@ -15,24 +15,20 @@ public class HttpRemoteDynmapServer extends AbstractDynmapServer {
 
     public HttpRemoteDynmapServer(Dynmap config) {
         super(config);
-        this.url = config.Url;
+        if (config.Url.endsWith("/")) {
+            this.url = config.Url;
+        } else {
+            this.url = config.Url + "/";
+        }
     }
 
     @Override
     public AbstractFile getFile(String path) throws IOException {
         path = path.replace(File.separator, "/");
-        if (url.endsWith("/")) {
-            if (path.startsWith("/")) {
-                return new HttpRemoteFile(url + path.substring(1));
-            } else {
-                return new HttpRemoteFile(url + path);
-            }
+        if (path.startsWith("/")) {
+            return new HttpRemoteFile(url + path.substring(1));
         } else {
-            if (path.startsWith("/")) {
-                return new HttpRemoteFile(url + path);
-            } else {
-                return new HttpRemoteFile(url + "/" + path);
-            }
+            return new HttpRemoteFile(url + path);
         }
     }
 }

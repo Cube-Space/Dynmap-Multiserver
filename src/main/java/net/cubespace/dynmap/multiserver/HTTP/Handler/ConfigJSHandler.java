@@ -6,17 +6,17 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpHeaderValues;
 import net.cubespace.dynmap.multiserver.HTTP.HandlerUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
-import static io.netty.handler.codec.http.HttpHeaders.Names.IF_MODIFIED_SINCE;
+import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
+import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_LENGTH;
+import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
+import static io.netty.handler.codec.http.HttpHeaderNames.IF_MODIFIED_SINCE;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -65,7 +65,7 @@ public class ConfigJSHandler implements IHandler {
         HandlerUtil.setDateAndCacheHeaders(response, start);
         response.headers().set(CONTENT_TYPE, "application/javascript; charset=UTF-8");
         response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
-        response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+        response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
 
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }

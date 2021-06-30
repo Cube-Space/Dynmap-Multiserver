@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -26,7 +26,7 @@ public class FacesFileHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
-            AbstractFile file = dynmapServer.getFile(request.getUri());
+            AbstractFile file = dynmapServer.getFile(request.uri());
             if (file.exists()) {
                 if (file.isHidden() || !file.exists()) {
                     HandlerUtil.sendError(ctx, NOT_FOUND);
@@ -63,7 +63,7 @@ public class FacesFileHandler implements IHandler {
                 HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
                 response.headers().set(CONTENT_LENGTH, file.length());
-                response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+                response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
                 response.headers().set(VARY, ACCEPT_ENCODING);
 
                 // Write the initial line and the header.
