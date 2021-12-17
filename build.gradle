@@ -33,7 +33,7 @@ dependencies {
 }
 
 group = 'net.cubespace.dynmap'
-version = '0.5.0'
+version = '0.5.1'
 description = 'Dynmap-MultiServer'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
