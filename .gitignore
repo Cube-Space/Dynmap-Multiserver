@@ -4,6 +4,8 @@ web.zip
 web/
 config/main.yml
 logs/
+/bin/
+/target/
 
 ## https://github.com/github/gitignore/blob/e89e04390435f1e7628740d7b4ce1fe65ac218fd/Gradle.gitignore
 .gradle
@@ -24,3 +26,16 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
