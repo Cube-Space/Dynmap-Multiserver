@@ -56,13 +56,13 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}</finalName>
+                            <finalName>${project.artifactId}-${project.version}-shade</finalName>
                             <artifactSet>
                                 <includes>
                                     <include>com.google.code.gson:*</include>
                                     <include>javax.activation:*</include>
                                     <include>org.slf4j:*</include>
-                                    <include>log4j:*</include>
+                                    <include>org.apache.logging.log4j:*</include>
                                     <include>org.yaml:*</include>
                                     <include>commons-io:*</include>
                                     <include>io.netty:*</include>
@@ -108,13 +108,8 @@
             <version>1.7.32</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.32</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
+            <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.17.0</version>
         </dependency>
         <dependency>
