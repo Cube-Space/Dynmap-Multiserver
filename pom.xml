@@ -56,7 +56,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <!-- <finalName>${project.artifactId}-${project.version}-shade</finalName> -->
+                            <finalName>${project.artifactId}-${project.version}-shade</finalName>
                             <artifactSet>
                                 <includes>
                                     <include>com.google.code.gson:*</include>
