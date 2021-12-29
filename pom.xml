@@ -6,7 +6,7 @@
 
     <groupId>net.cubespace.dynmap</groupId>
     <artifactId>Dynmap-MultiServer</artifactId>
-    <version>0.5.4</version>
+    <version>0.5.5</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -56,7 +56,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}-${project.version}-shade</finalName>
+                            <!-- <finalName>${project.artifactId}-${project.version}-shade</finalName> -->
                             <artifactSet>
                                 <includes>
                                     <include>com.google.code.gson:*</include>
