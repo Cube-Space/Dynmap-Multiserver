@@ -41,6 +41,10 @@ application {
     mainClass = 'net.cubespace.dynmap.multiserver.Main'
 }
 
+shadowJar {
+    archiveClassifier = 'shade'
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
