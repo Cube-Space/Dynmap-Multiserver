@@ -9,7 +9,8 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    mavenCentral()
+
     maven {
         url = uri('https://repo.md-5.net/content/repositories/snapshots/')
     }
