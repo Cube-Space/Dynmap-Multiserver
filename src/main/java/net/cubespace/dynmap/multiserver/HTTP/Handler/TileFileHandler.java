@@ -64,7 +64,7 @@ public class TileFileHandler implements IHandler {
                     HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
                     response.headers().set(CONTENT_LENGTH, file.length());
-                    response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+                    response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
                     response.headers().set(VARY, ACCEPT_ENCODING);
 
                     // Write the initial line and the header.
@@ -119,7 +119,7 @@ public class TileFileHandler implements IHandler {
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
         response.headers().set(CONTENT_LENGTH, file.length());
-        response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+        response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
         response.headers().set(VARY, ACCEPT_ENCODING);
 
         // Write the initial line and the header.
