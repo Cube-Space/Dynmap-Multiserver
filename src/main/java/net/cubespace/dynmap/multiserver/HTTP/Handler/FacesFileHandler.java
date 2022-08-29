@@ -26,7 +26,7 @@ public class FacesFileHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
-            AbstractFile file = dynmapServer.getFile(request.getUri());
+            AbstractFile file = dynmapServer.getFile(request.uri());
             if (file.exists()) {
                 if (file.isHidden() || !file.exists()) {
                     HandlerUtil.sendError(ctx, NOT_FOUND);

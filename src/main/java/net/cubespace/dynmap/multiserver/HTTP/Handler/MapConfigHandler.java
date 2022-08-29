@@ -28,7 +28,7 @@ public class MapConfigHandler implements IHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
-        String world = request.getUri().split("/")[3].split("\\.")[0];
+        String world = request.uri().split("/")[3].split("\\.")[0];
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
             for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
                 if (dynmapWorld.getName().equals(world)) {

@@ -25,11 +25,11 @@ public class MarkerHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         AbstractFile path = null;
-        String world = request.getUri().split("/")[3].replace("marker_", "").replace(".json", "");
+        String world = request.uri().split("/")[3].replace("marker_", "").replace(".json", "");
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
             for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
                 if (dynmapWorld.getName().equals(world)) {
-                    path = dynmapServer.getFile(request.getUri());
+                    path = dynmapServer.getFile(request.uri());
                 }
             }
         }

@@ -38,7 +38,7 @@ public class HTTPServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
 
         //Check which handler should handle it
-        final String uri = request.getUri();
+        final String uri = request.uri();
         String path = HandlerUtil.sanitizeUri(uri);
         if (path == null) {
             HandlerUtil.sendError(ctx, FORBIDDEN);

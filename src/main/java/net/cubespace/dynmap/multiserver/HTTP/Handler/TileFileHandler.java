@@ -25,11 +25,11 @@ public class TileFileHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         AbstractFile path = null;
-        String world = request.getUri().split("/")[2];
+        String world = request.uri().split("/")[2];
 
         if (world.equals("_markers_")) {
             for (DynmapServer dynmapServer : Main.getDynmapServers()) {
-                AbstractFile file = dynmapServer.getFile(request.getUri());
+                AbstractFile file = dynmapServer.getFile(request.uri());
                 if (file.exists()) {
                     if (file.isHidden() || !file.exists()) {
                         HandlerUtil.sendError(ctx, NOT_FOUND);
@@ -81,7 +81,7 @@ public class TileFileHandler implements IHandler {
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
             for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
                 if (dynmapWorld.getName().equals(world)) {
-                    path = dynmapServer.getFile(request.getUri());
+                    path = dynmapServer.getFile(request.uri());
                 }
             }
         }
