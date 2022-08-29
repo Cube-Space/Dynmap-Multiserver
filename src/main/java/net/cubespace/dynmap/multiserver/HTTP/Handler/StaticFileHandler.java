@@ -79,6 +79,7 @@ public class StaticFileHandler implements IHandler {
 
         RandomAccessFile raf;
         try {
+            // FIXME resource leak?
             raf = new RandomAccessFile(file, "r");
         } catch (FileNotFoundException fnfe) {
             HandlerUtil.sendError(ctx, NOT_FOUND);
