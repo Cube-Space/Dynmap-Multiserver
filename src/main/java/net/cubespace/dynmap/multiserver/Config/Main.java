@@ -1,7 +1,7 @@
 package net.cubespace.dynmap.multiserver.Config;
 
 
-import net.cubespace.Yamler.Config.Config;
+import net.cubespace.Yamler.Config.YamlConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
-public class Main extends Config {
+public class Main extends YamlConfig {
     public Main() {
         CONFIG_FILE = new File("config/main.yml");
 
