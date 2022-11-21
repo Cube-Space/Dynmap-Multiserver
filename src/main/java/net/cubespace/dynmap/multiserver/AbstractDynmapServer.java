@@ -2,6 +2,8 @@ package net.cubespace.dynmap.multiserver;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+
 import net.cubespace.dynmap.multiserver.Config.Dynmap;
 import net.cubespace.dynmap.multiserver.GSON.*;
 import net.cubespace.dynmap.multiserver.util.AbstractFile;
@@ -114,6 +116,9 @@ public abstract class AbstractDynmapServer implements DynmapServer {
                     dynmapWorldConfigs.put(world.getName(), dynmapWorldConfig1);
 
                     logger.info("Loaded World " + world.getName());
+                } catch(JsonSyntaxException e) {
+                    logger.error("JsonSyntaxException "+ dynmapWorldConfig.getName() + " has broken", e);
+                    throw e;
                 } catch (FileNotFoundException e) {
                     logger.error("Error in reading in the Worldfile", e);
                 } catch (IOException e) {

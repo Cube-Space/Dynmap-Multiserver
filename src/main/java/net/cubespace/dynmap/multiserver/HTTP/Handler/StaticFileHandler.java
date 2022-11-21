@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -27,8 +27,8 @@ public class StaticFileHandler implements IHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Check for index
-        final String path = webDir + File.separator + request.getUri();
-        final String uri = request.getUri();
+        final String path = webDir + File.separator + request.uri();
+        final String uri = request.uri();
         if (uri.endsWith("/")) {
             for (String index : indexFiles) {
                 File checkFile = new File(path, index);
@@ -79,6 +79,7 @@ public class StaticFileHandler implements IHandler {
 
         RandomAccessFile raf;
         try {
+            // FIXME resource leak?
             raf = new RandomAccessFile(file, "r");
         } catch (FileNotFoundException fnfe) {
             HandlerUtil.sendError(ctx, NOT_FOUND);
@@ -93,7 +94,7 @@ public class StaticFileHandler implements IHandler {
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
         response.headers().set(CONTENT_LENGTH, fileLength);
-        response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+        response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
         response.headers().set(VARY, ACCEPT_ENCODING);
 
         // Write the initial line and the header.

@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -25,11 +25,11 @@ public class MarkerHandler implements IHandler {
     public void handle(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Get the correct DynmapServer
         AbstractFile path = null;
-        String world = request.getUri().split("/")[3].replace("marker_", "").replace(".json", "");
+        String world = request.uri().split("/")[3].replace("marker_", "").replace(".json", "");
         for (DynmapServer dynmapServer : Main.getDynmapServers()) {
             for (DynmapWorld dynmapWorld : dynmapServer.getWorlds()) {
                 if (dynmapWorld.getName().equals(world)) {
-                    path = dynmapServer.getFile(request.getUri());
+                    path = dynmapServer.getFile(request.uri());
                 }
             }
         }
@@ -68,7 +68,7 @@ public class MarkerHandler implements IHandler {
         HandlerUtil.setDateAndCacheHeaders(response, file.lastModified());
 
         response.headers().set(CONTENT_LENGTH, file.length());
-        response.headers().set(CONNECTION, HttpHeaders.Values.CLOSE);
+        response.headers().set(CONNECTION, HttpHeaderValues.CLOSE);
         response.headers().set(VARY, ACCEPT_ENCODING);
 
         // Write the initial line and the header.

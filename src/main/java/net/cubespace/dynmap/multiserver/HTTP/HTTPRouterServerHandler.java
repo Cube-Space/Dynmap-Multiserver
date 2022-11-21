@@ -6,12 +6,13 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
-import static io.netty.handler.codec.http.HttpHeaders.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
+import static io.netty.handler.codec.http.HttpUtil.*;
 import static io.netty.handler.codec.http.HttpVersion.*;
 
 /**
@@ -29,7 +30,7 @@ public class HTTPRouterServerHandler extends ChannelHandlerAdapter {
             HttpRequest req = (HttpRequest) msg;
 
             if (is100ContinueExpected(req)) {
-                ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
+                ctx.write(new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.CONTINUE));
             }
             boolean keepAlive = isKeepAlive(req);
             FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(CONTENT));
@@ -39,7 +40,7 @@ public class HTTPRouterServerHandler extends ChannelHandlerAdapter {
             if (!keepAlive) {
                 ctx.write(response).addListener(ChannelFutureListener.CLOSE);
             } else {
-                response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+                response.headers().set(CONNECTION, HttpHeaderNames.CONNECTION);
                 ctx.write(response);
             }
         }

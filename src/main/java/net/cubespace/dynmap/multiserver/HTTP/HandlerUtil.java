@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
+import static io.netty.handler.codec.http.HttpHeaderNames.*;
 import static io.netty.handler.codec.http.HttpResponseStatus.FOUND;
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_MODIFIED;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;

@@ -26,19 +26,21 @@ public class HTTPServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //Check for bad Request
-        if (!request.getDecoderResult().isSuccess()) {
+        if (!request.decoderResult().isSuccess()) {
             HandlerUtil.sendError(ctx, BAD_REQUEST);
             return;
         }
 
         //Check for correct HTTP Method (only GET and POST should work)
-        if (request.getMethod() != GET && request.getMethod() != POST) {
+        if (request.method() != GET && request.public void name() {
+            
+        }() != POST) {
             HandlerUtil.sendError(ctx, METHOD_NOT_ALLOWED);
             return;
         }
 
         //Check which handler should handle it
-        final String uri = request.getUri();
+        final String uri = request.uri();
         String path = HandlerUtil.sanitizeUri(uri);
         if (path == null) {
             HandlerUtil.sendError(ctx, FORBIDDEN);

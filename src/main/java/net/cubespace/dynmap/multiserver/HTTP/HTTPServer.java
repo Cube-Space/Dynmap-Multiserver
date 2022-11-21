@@ -8,8 +8,6 @@ import net.cubespace.dynmap.multiserver.Config.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
-
 /**
  * @author geNAZt (fabian.fassbender42@googlemail.com)
  */
