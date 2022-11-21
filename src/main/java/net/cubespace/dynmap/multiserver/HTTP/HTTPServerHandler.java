@@ -32,9 +32,7 @@ public class HTTPServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         }
 
         //Check for correct HTTP Method (only GET and POST should work)
-        if (request.method() != GET && request.public void name() {
-            
-        }() != POST) {
+        if (request.method() != GET && request.method() != POST) {
             HandlerUtil.sendError(ctx, METHOD_NOT_ALLOWED);
             return;
         }
