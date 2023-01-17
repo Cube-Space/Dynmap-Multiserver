@@ -36,7 +36,10 @@ dependencies {
 group = 'net.cubespace.dynmap'
 version = '0.5.5'
 description = 'Dynmap-MultiServer'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 application {
     mainClass = 'net.cubespace.dynmap.multiserver.Main'
